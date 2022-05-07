@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 
@@ -63,5 +64,11 @@ Route::post('/registrasi', [RegisterController::class, 'store']);
 
 // Administartor
 Route::get('/dashboard', function() {
-    return view('dashboard.index');
+    return view('dashboard.index', [
+        'title' => 'Dashboard'
+    ]);
 })->middleware('auth');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/berita', [BeritaController::class, 'index']);
+});
